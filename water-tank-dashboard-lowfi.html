@@ -4,260 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Water Tank Monitor - Low Fidelity</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            padding: 20px;
-        }
-        
-        /* Low-fi wireframe style */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            border: 2px solid #333;
-            padding: 20px;
-        }
-        
-        /* Header */
-        header {
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        
-        h1 {
-            font-size: 24px;
-            font-weight: normal;
-            border: 2px solid #333;
-            padding: 10px;
-            display: inline-block;
-        }
-        
-        .status-bar {
-            margin-top: 10px;
-            border: 2px solid #333;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .status-item {
-            border: 1px solid #666;
-            padding: 5px 10px;
-        }
-        
-        /* Main Content Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        /* Tank Display */
-        .tank-display {
-            border: 2px solid #333;
-            padding: 20px;
-        }
-        
-        .tank-visual {
-            width: 100%;
-            height: 300px;
-            border: 3px solid #333;
-            position: relative;
-            background: repeating-linear-gradient(
-                0deg,
-                #fff,
-                #fff 10px,
-                #e0e0e0 10px,
-                #e0e0e0 20px
-            );
-            margin: 20px 0;
-        }
-        
-        .water-level {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 65%;
-            background: repeating-linear-gradient(
-                0deg,
-                #4a9eff,
-                #4a9eff 10px,
-                #357abd 10px,
-                #357abd 20px
-            );
-            border-top: 3px solid #333;
-        }
-        
-        .level-percentage {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            font-weight: bold;
-            border: 2px solid #333;
-            padding: 10px 20px;
-            background-color: white;
-        }
-        
-        /* Info Cards */
-        .info-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .card {
-            border: 2px solid #333;
-            padding: 15px;
-        }
-        
-        .card-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #666;
-            padding-bottom: 5px;
-        }
-        
-        .card-value {
-            font-size: 24px;
-            margin: 10px 0;
-            border: 1px solid #666;
-            padding: 8px;
-            text-align: center;
-        }
-        
-        .metric-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 5px 0;
-            border: 1px solid #666;
-            padding: 5px;
-        }
-        
-        /* Controls Section */
-        .controls-section {
-            border: 2px solid #333;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .section-title {
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 5px;
-        }
-        
-        .control-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-        
-        .control-box {
-            border: 2px solid #333;
-            padding: 15px;
-        }
-        
-        .input-group {
-            margin: 10px 0;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 12px;
-        }
-        
-        .input-group input {
-            width: 100%;
-            border: 2px solid #333;
-            padding: 8px;
-            font-size: 14px;
-        }
-        
-        button {
-            border: 2px solid #333;
-            background-color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            width: 100%;
-        }
-        
-        button:hover {
-            background-color: #f0f0f0;
-        }
-        
-        /* History/Log Section */
-        .history-section {
-            border: 2px solid #333;
-            padding: 20px;
-        }
-        
-        .log-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        
-        .log-table th,
-        .log-table td {
-            border: 1px solid #333;
-            padding: 10px;
-            text-align: left;
-        }
-        
-        .log-table th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-        }
-        
-        /* Alert Box */
-        .alert-box {
-            border: 3px solid #333;
-            padding: 15px;
-            margin-bottom: 20px;
-            background: repeating-linear-gradient(
-                45deg,
-                #fff,
-                #fff 10px,
-                #f0f0f0 10px,
-                #f0f0f0 20px
-            );
-        }
-        
-        .alert-title {
-            font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .control-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="notifications.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -325,13 +73,13 @@
                     <div class="card-title">NOTIFICATIONS</div>
                     <div class="metric-row">
                         <span>SMS Sent Today:</span>
-                        <span>3</span>
+                        <span id="sms-count">3</span>
                     </div>
                     <div class="metric-row">
                         <span>Last SMS:</span>
-                        <span>08:45 AM</span>
+                        <span id="last-sms">08:45 AM</span>
                     </div>
-                    <button>VIEW ALL</button>
+                    <button id="view-notifications">VIEW ALL</button>
                 </div>
                 
                 <div class="card">
@@ -443,6 +191,32 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div id="notifications-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>NOTIFICATION HISTORY</h2>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>DATE & TIME</th>
+                            <th>TYPE</th>
+                            <th>MESSAGE</th>
+                            <th>RECIPIENT</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notifications-list">
+                        <!-- Notifications will be populated here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
