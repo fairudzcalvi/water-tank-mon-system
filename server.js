@@ -1,6 +1,5 @@
 const express = require('express');
 const { Pool } = require('pg');
-
 const path = require('path');
 
 const app = express();
