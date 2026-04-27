@@ -1,9 +1,11 @@
 const express = require('express');
 const { Pool } = require('pg');
 
+const path = require('path');
+
 const app = express();
 app.use(express.json());
-app.use(express.static('.'));
+app.use(express.static(path.join(__dirname)));
 
 // --- Supabase PostgreSQL connection ---
 // Set this in your Render environment variables as DATABASE_URL
@@ -17,6 +19,11 @@ async function getThresholds() {
     const res = await pool.query('SELECT * FROM thresholds WHERE id = 1');
     return res.rows[0] || { low_pct: 20, high_pct: 90, phone: '+639123456789' };
 }
+
+// --- Redirect root to dashboard ---
+app.get('/', (_req, res) => {
+    res.sendFile(path.join(__dirname, 'water-tank-dashboard-lowfi.html'));
+});
 
 // --- ESP32 posts sensor data here ---
 app.post('/api/water-level', async (req, res) => {

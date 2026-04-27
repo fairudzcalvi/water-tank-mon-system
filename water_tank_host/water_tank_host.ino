@@ -16,11 +16,11 @@
 HardwareSerial sim800(2);   // UART2
 
 // ============================================================
-//  WiFi AP CREDENTIALS
+//  WiFi CREDENTIALS  (your home/router WiFi)
 // ============================================================
-const char* ap_ssid     = "WaterTank-ESP32";
-const char* ap_password = "watertank123";
-const char* serverURL = "https://your-app.onrender.com/api/water-level";
+const char* wifi_ssid     = "YOUR_WIFI_SSID";
+const char* wifi_password = "YOUR_WIFI_PASSWORD";
+const char* serverURL     = "https://your-app.onrender.com/api/water-level";
 
 // ============================================================
 //  CYLINDRICAL TANK DIMENSIONS  (edit to match your container)
@@ -168,10 +168,10 @@ float calcLiters(float water_height_cm) {
 //  FETCH THRESHOLDS FROM SERVER
 // ============================================================
 void fetchThresholds() {
-    if (WiFi.softAPgetStationNum() == 0) return;
+    if (WiFi.status() != WL_CONNECTED) return;
 
     HTTPClient http;
-    http.begin("http://192.168.4.2:3000/api/thresholds");
+    http.begin("https://your-app.onrender.com/api/thresholds");
     int code = http.GET();
     if (code == 200) {
         String body = http.getString();
@@ -207,8 +207,8 @@ void fetchThresholds() {
 //  SEND DATA TO SERVER
 // ============================================================
 void sendToServer(float liters, float pct, float dist_cm) {
-    if (WiFi.softAPgetStationNum() == 0) {
-        Serial.println("[AP] No clients connected, skipping send");
+    if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("[WiFi] Not connected, skipping send");
         return;
     }
     HTTPClient http;
@@ -265,14 +265,16 @@ void setup() {
     // Start SIM800L
     sim800Init();
 
-    // Start WiFi AP
-    WiFi.mode(WIFI_AP);
-    WiFi.softAP(ap_ssid, ap_password);
+    // Connect to WiFi
+    WiFi.mode(WIFI_STA);
+    WiFi.begin(wifi_ssid, wifi_password);
+    Serial.print("\n[WiFi] Connecting to " + String(wifi_ssid));
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+    Serial.println("\n[WiFi] Connected! IP: " + WiFi.localIP().toString());
 
-    Serial.println("\n[AP] ESP32 Access Point started");
-    Serial.println("[AP] Network : " + String(ap_ssid));
-    Serial.println("[AP] Password: " + String(ap_password));
-    Serial.println("[AP] ESP32 IP: " + WiFi.softAPIP().toString());
     Serial.printf("[Tank] Diameter: %.1f cm | Height: %.1f cm | Max: %.2f L\n",
                   DIAMETER_CM, HEIGHT_CM, MAX_LITERS);
     Serial.println("------------------------------");
