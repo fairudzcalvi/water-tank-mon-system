@@ -5,7 +5,6 @@ const path = require('path');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname)));
 
 // --- Supabase PostgreSQL connection ---
 // Set this in your Render environment variables as DATABASE_URL
@@ -153,6 +152,9 @@ app.get('/api/gsm-signal', async (_req, res) => {
     const result = await pool.query('SELECT * FROM gsm_status ORDER BY id DESC LIMIT 1');
     res.json(result.rows[0] || { rssi: -1, quality: 'Unknown' });
 });
+
+// --- Serve static files (after API routes) ---
+app.use(express.static(path.join(__dirname)));
 
 // --- Start server ---
 const PORT = process.env.PORT || 3000;

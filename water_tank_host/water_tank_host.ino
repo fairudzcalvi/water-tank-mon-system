@@ -18,9 +18,9 @@ HardwareSerial sim800(2);   // UART2
 // ============================================================
 //  WiFi CREDENTIALS  (your home/router WiFi)
 // ============================================================
-const char* wifi_ssid     = "YOUR_WIFI_SSID";
-const char* wifi_password = "YOUR_WIFI_PASSWORD";
-const char* serverURL     = "https://your-app.onrender.com/api/water-level";
+const char* wifi_ssid     = "PLDTHOMEFIBR3EXJF";
+const char* wifi_password = "PLDTWIFIaXaGD";
+const char* serverURL     = "https://hehehe.onrender.com/api/water-level";
 
 // ============================================================
 //  CYLINDRICAL TANK DIMENSIONS  (edit to match your container)
