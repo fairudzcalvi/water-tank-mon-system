@@ -20,7 +20,7 @@ HardwareSerial sim800(2);   // UART2
 // ============================================================
 const char* wifi_ssid     = "PLDTHOMEFIBR3EXJF";
 const char* wifi_password = "PLDTWIFIaXaGD";
-const char* serverURL     = "https://hehehe.onrender.com/api/water-level";
+const char* serverURL     = "https://water-tank-mon-system.onrender.com/api/water-level";
 
 // ============================================================
 //  CYLINDRICAL TANK DIMENSIONS  (edit to match your container)
@@ -171,7 +171,7 @@ void fetchThresholds() {
     if (WiFi.status() != WL_CONNECTED) return;
 
     HTTPClient http;
-    http.begin("https://your-app.onrender.com/api/thresholds");
+    http.begin("https://water-tank-mon-system.onrender.com/api/thresholds");
     int code = http.GET();
     if (code == 200) {
         String body = http.getString();
