@@ -17,9 +17,9 @@ HardwareSerial sim800(2);   // UART2
 
 // ============================================================
 //  WiFi CREDENTIALS  (your home/router WiFi)
-// =======================================================Si=====
-const char* wifi_ssid     = "Kitchen_Love 5G";
-const char* wifi_password = "Siopa0Guisad0";
+// ============================================================
+const char* wifi_ssid     = "Huawei 50 pro mate";
+const char* wifi_password = "dikoalamss";
 const char* serverURL     = "https://water-tank-mon-system.onrender.com/api/water-level";
 
 // ============================================================
@@ -42,7 +42,7 @@ float HIGH_THRESHOLD_PCT = 90.0;
 String alertPhone = "+639565020288";
 
 // Cooldown: don't re-send the same alert for this many seconds
-const unsigned long ALERT_COOLDOWN_MS = 30000UL;  // 5 minutes
+const unsigned long ALERT_COOLDOWN_MS = 30000UL;  // 30 seconds
 unsigned long lastLowAlertMs  = 0;
 unsigned long lastHighAlertMs = 0;
 
